@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered SRS Ambiguity Detection Chatbot - Conversational requirement analysis">
+    <meta name="keywords" content="SRS, software requirements, ambiguity detection, NLP, chatbot">
+    <meta name="author" content="SRS Chatbot">
+
+    <title>SRS Ambiguity Detection Chatbot</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="background-gradient"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-content">
+                <div class="bot-avatar">🤖</div>
+                <div class="header-info">
+                    <h1>SRS Assistant</h1>
+                    <p class="status"><span class="status-dot"></span> Online</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <main class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <!-- Messages will be appended here -->
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typing-indicator" class="typing-indicator hidden">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="chat-input-area">
+            <div class="input-container">
+                <textarea id="user-input" class="chat-input" placeholder="Paste your complete SRS document here..."
+                    rows="1" maxlength="10000"></textarea>
+                <button id="send-btn" class="send-btn" aria-label="Send message">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <div class="input-footer">
+                <span class="char-count"><span id="char-count">0</span>/10000</span>
+                <span class="powered-by">Powered by NLP</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
