@@ -8,6 +8,7 @@ from flask_cors import CORS
 import os
 import uuid
 import io
+import base64
 from datetime import datetime
 
 # Import our custom modules
@@ -217,17 +218,15 @@ def generate_final_improvements(session):
             
         pdf_bytes = generate_improved_srs_pdf(session, pdf_filename)
         
-        # Store PDF bytes in session (in-memory)
-        session['pdf_bytes'] = pdf_bytes
-        session['pdf_filename'] = pdf_filename
+        # Encode to base64 for client-side download
+        pdf_base64 = base64.b64encode(pdf_bytes).decode('utf-8')
         
         messages.append({
             'content': f'📄 **PDF Ready for Download!**\n\nYour improved SRS has been generated as a professional PDF document.',
             'type': 'download',
             'data': {
-                'session_id': session_id,
                 'filename': pdf_filename,
-                'download_url': f'/download-pdf/{session_id}'
+                'pdf_base64': pdf_base64
             }
         })
     except Exception as e:
@@ -236,6 +235,7 @@ def generate_final_improvements(session):
             'content': f'⚠️ PDF generation encountered an issue: {str(e)}',
             'type': 'text'
         })
+    
     
     messages.append({
         'content': '🎊 **Done!** Your requirements are now clearer and more specific. Feel free to analyze another document! 😊',
@@ -439,29 +439,8 @@ def welcome():
 
 @app.route('/download-pdf/<session_id>', methods=['GET'])
 def download_pdf(session_id):
-    """Download the generated PDF for a session"""
-    try:
-        if session_id not in conversations:
-            return jsonify({'error': 'Session not found'}), 404
-            
-        session = conversations[session_id]
-        
-        if 'pdf_bytes' not in session:
-             return jsonify({'error': 'PDF not found for this session'}), 404
-             
-        pdf_bytes = session['pdf_bytes']
-        pdf_filename = session.get('pdf_filename', 'improved_srs.pdf')
-        
-        # serve from memory
-        return send_file(
-            io.BytesIO(pdf_bytes),
-            mimetype='application/pdf',
-            as_attachment=True,
-            download_name=pdf_filename
-        )
-    
-    except Exception as e:
-        return jsonify({'error': f'Download failed: {str(e)}'}), 500
+    """Deprecated: Download handled client-side via Base64"""
+    return jsonify({'error': 'Please use the client-side download button'}), 410
 
 
 @app.route('/health', methods=['GET'])

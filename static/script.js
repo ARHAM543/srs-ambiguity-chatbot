@@ -180,9 +180,17 @@ function createMessageElement(role, content, type = 'text', data = null) {
     contentDiv.innerHTML = formattedContent;
 
     // Add download button if type is 'download'
-    if (type === 'download' && data && data.download_url) {
+    if (type === 'download' && data) {
         const downloadBtn = document.createElement('a');
-        downloadBtn.href = data.download_url;
+
+        if (data.pdf_base64) {
+            // Client-side download using Base64
+            downloadBtn.href = `data:application/pdf;base64,${data.pdf_base64}`;
+        } else if (data.download_url) {
+            // Fallback for legacy (or local)
+            downloadBtn.href = data.download_url;
+        }
+
         downloadBtn.className = 'download-btn';
         downloadBtn.innerHTML = '📥 Download PDF';
         downloadBtn.download = data.filename || 'improved_srs.pdf';
